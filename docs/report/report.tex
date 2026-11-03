@@ -10,7 +10,7 @@
 \usepackage{cite}
 \usepackage{balance}
 
-\graphicspath{{../../core/docs/figures/}}
+\graphicspath{{./}{../../core/docs/figures/}}
 \newcommand{\code}[1]{\texttt{\small #1}}
 
 \begin{document}
@@ -31,10 +31,11 @@ harder case of correctly signed false values: each reading is compared with its 
 of neighbours and physical rules, and an Extra Trees classifier per variable turns 37 causal features into a
 calibrated p-value and an alert. Layer~4 converts provenance verdicts and alerts into a trust state per
 sensor, withholds or imputes suspicious values, and logs every decision in a hash-chained audit trail. On a
-full year of real WegenerNet data (2024) with 12 attack families, the frozen detector detects 79--82\,\% of
-attacks with a median delay of 60--90\,min, 57--60\,\% precision and 0.013 false-alert episodes per
-stream-day, doubling F1 over a rule ensemble built from the same signals. A live 30-minute tick for 486
-streams takes 0.2\,s on a 2-core CPU with 0.85\,GB peak memory; provenance adds 104 bytes per record.
+full year of real WegenerNet data (2024) with 12 attack families, the frozen detector raises at least one alert on 79--82\,\%
+of attacks, while flagging 32--35\,\% of the individual manipulated readings, with 57--60\,\% precision and
+0.013 false-alert episodes per stream-day; it doubles F1 over a rule ensemble built from the same signals. A live 30-minute tick for 486
+streams takes 0.2\,s on a 2-core CPU with 0.85\,GB peak memory; Ed25519 provenance adds 104 bytes per
+record.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -57,9 +58,23 @@ or physically spoofed sensor produces perfectly valid signatures.
 Our contributions are: (i)~a threat model separating network/storage attackers from valid-signature
 attackers, with an attack taxonomy mapped to the layer expected to catch each family; (ii)~a software
 trust anchor with fail-closed verification; (iii)~a causal, calibrated detector evaluated under a strict
-chronological protocol with unseen attack families and magnitudes; (iv)~a response layer that prevents
+chronological protocol with attack families withheld from training; (iv)~a response layer that prevents
 suspicious values from reaching the analyst; and (v)~latency, memory and security-overhead measurements on
 a laptop CPU.
+
+\section{Related Work}
+
+False-data injection was formalised for power-grid state estimation, where Liu \emph{et al.} showed that an
+attacker who knows the system model can inject errors that pass residual-based bad-data checks~\cite{liu-fdi}.
+Our setting differs: there is no physical model linking stations, so consistency must be learned from
+history and neighbours. Meteorological networks have long used temporal, range and spatial quality-control
+tests, such as the spatial regression test of Hubbard \emph{et al.}~\cite{hubbard-qc}; these target sensor
+faults, not an adversary who can shape the error. We reuse such tests as features and learn how they combine.
+Unsupervised detectors such as Isolation Forest~\cite{iforest} and forecasting models are surveyed
+in~\cite{chandola}; in our comparison they react to rare weather and recall few attacks under a strict
+false-alarm budget. Our calibration (Eq.~\ref{eq:p}) is a conformal p-value~\cite{vovk}, which makes the
+alert threshold a controlled tail probability on clean data. Finally, we report point metrics without point
+adjustment, which is known to overstate time-series anomaly detection~\cite{kim-pa}.
 
 \section{Threat Model}
 
@@ -142,8 +157,10 @@ Every 30 minutes each sensor is \emph{trusted}, \emph{suspicious} ($\geq 3$ aler
 values are imputed from the median of at least two trusted neighbours, or withheld. A single forged message
 never quarantines a sensor, since otherwise anyone could silence a sensor without its key; it is flagged,
 audited and never released. Provenance quarantine ends only by an analyst release recorded with name and
-reason. Thresholds were set by Monte-Carlo simulation on the detector's measured behaviour: 0.072 false
-quarantines per sensor-month, while every simulated 24--48\,h attack is quarantined (median 8\,h). Decisions
+reason. Thresholds were set by Monte-Carlo simulation on the detector's measured behaviour, assuming each attacked
+tick alerts independently with probability 0.33 (the measured reading recall): 0.072 false quarantines per
+sensor-month, while every simulated 24--48\,h attack is quarantined (median 8\,h). Real alerts cluster in
+time, so these figures are indicative. Decisions
 go to an append-only SQLite log with its own SHA-256 chain; triggers reject updates and deletions. A
 FastAPI dashboard shows states, raw versus released values and chain status.
 
@@ -160,8 +177,8 @@ a future value never changes an earlier feature). Rain is modelled as $\log(1+x)
 ($1.4826\cdot$MAD) per site and variable.
 \begin{itemize}
 \item \emph{Temporal (11)}: residual to a forecast $b\,x_{t-1}+(1-b)\,x_{t-48}$, residual to a per-site
-harmonic seasonal model, a two-sided CUSUM~\cite{cusum} that accumulates slow drifts, and 3\,h/24\,h median, MAD,
-standard deviation and slope.
+harmonic seasonal model, a two-sided CUSUM~\cite{cusum} that accumulates slow drifts, 3\,h and 24\,h median, MAD
+and standard deviation, and 3\,h slope.
 \item \emph{Spatial (14)}: residuals to a distance-weighted median of a \emph{near ring} (6 closest sites)
 and a disjoint \emph{wider ring} (19th--24th closest), with weights capped at 45\,\% so one attacked
 neighbour cannot dominate; neighbour spread, count and co-movement.
@@ -183,6 +200,7 @@ budget. Training replays each 14-day episode clean and with four seeded attacked
 clean samples are hard cases with large genuine neighbour residuals. Scores are calibrated on clean data as
 \begin{equation}
 p = \frac{1 + \#\{\text{clean scores} \geq s\}}{n + 1},
+\label{eq:p}
 \end{equation}
 so one budget applies to all variables. Per variable, an alert is raised when $p \leq \alpha$, directly or
 with two-of-three confirmation, choosing the best F1 subject to $\leq 0.05$ false-alert episodes per
@@ -194,7 +212,7 @@ We use WegenerNet Level~2 v8.0 (University of Graz, CC~BY~4.0)~\cite{wegenernet}
 Feldbach region, 2023--2024. A 1.5\,km sub-grid of cells clean for $\geq 95\,\%$ of training gives 162 sites
 $\times$ 3 variables $=$ 486 streams. Splits are strictly chronological: Jan--Aug 2023 training, Sep--Oct
 calibration, Nov--Dec rule selection, and 2024 for evaluation only. Metrics are strict point metrics without
-point adjustment, plus event detection and delay to first alert.
+point adjustment, plus event detection (at least one alert during the attack).
 
 \subsection{Results}
 
@@ -203,14 +221,14 @@ point adjustment, plus event detection and delay to first alert.
 \label{tab:results}
 \centering
 \small
-\setlength{\tabcolsep}{2.3pt}
-\begin{tabular}{@{}lcccccc@{}}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lccccc@{}}
 \toprule
- & Prec. & Rec. & F1 & Events & Delay & FA/sd \\
+ & Prec. & Rec. & F1 & Events & FA/sd \\
 \midrule
-Seed 91000 & 57.1\,\% & 31.8\,\% & 0.408 & 79.2\,\% & 60\,min & 0.013 \\
-Seed 191000 & 59.6\,\% & 35.3\,\% & 0.443 & 82.2\,\% & 90\,min & 0.013 \\
-Rule ensemble & 31.8\,\% & 17--18\,\% & 0.22--0.23 & 51--55\,\% & -- & 0.046 \\
+Seed 91000 & 57.1\,\% & 31.8\,\% & 0.408 & 79.2\,\% & 0.013 \\
+Seed 191000 & 59.6\,\% & 35.3\,\% & 0.443 & 82.2\,\% & 0.013 \\
+Rule ensemble & 31.8\,\% & 17--18\,\% & 0.22--0.23 & 51--55\,\% & 0.046 \\
 \bottomrule
 \end{tabular}
 
@@ -219,15 +237,17 @@ Rule ensemble & 31.8\,\% & 17--18\,\% & 0.22--0.23 & 51--55\,\% & -- & 0.046 \\
 FA/sd: false-alert episodes per stream-day on clean 2024 (budget 0.05).
 \end{table}
 
-Table~\ref{tab:results} reports the results. Coverage is 100\,\%. The false-alarm rate corresponds to about
+Table~\ref{tab:results} reports the results. Coverage is 100\,\%. The gap between attacks detected (about four
+in five) and readings flagged (about one in three) is expected: an alert early in an attack is enough to act on,
+but the readings before evidence accumulates, such as the first steps of a slow drift, are missed. The false-alarm rate corresponds to about
 one false episode per stream every 2.5 months, four times under the budget. Against a rule ensemble fusing
 the same temporal, spatial and physical scores with an Isolation Forest, the learned detector roughly doubles
 precision, recall and F1 and produces 3.5$\times$ fewer false alarms (Fig.~\ref{fig:vsrules}).
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{detector_vs_rule_ensemble.png}
-\caption{Detector versus rule ensemble on the same signals (2024).}
+\includegraphics[width=\columnwidth]{fig_detector_vs_rules.pdf}
+\caption{Learned detector versus rule ensemble on the same signals (2024, seed 91000).}
 \label{fig:vsrules}
 \end{figure}
 
@@ -237,7 +257,7 @@ events, though not every manipulated reading inside them.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{family_recall.png}
+\includegraphics[width=0.92\columnwidth]{family_recall.png}
 \caption{Detection per attack family (2024, seed 91000). Families marked withheld were never seen in
 training.}
 \label{fig:families}
@@ -262,20 +282,24 @@ Table~\ref{tab:evasion} summarises how an informed attacker might evade detectio
 \label{tab:evasion}
 \centering
 \small
-\begin{tabular}{@{}p{0.3\columnwidth}p{0.63\columnwidth}@{}}
+\begin{tabular}{@{}>{\raggedright}p{0.25\columnwidth}>{\raggedright\arraybackslash}p{0.69\columnwidth}@{}}
 \toprule
 Strategy & Outcome \\
 \midrule
-Unseen attack types & pattern 81--85\,\%, mimicry 89--100\,\%, multivariate 89--96\,\% of attacks detected; never in training \\
-Unseen magnitudes & 2024 uses $\pm$0.75--3\,\textdegree C, $\pm$7.5--15\,\% RH versus $\pm$0.5--4\,\textdegree C, $\pm$5--20\,\% in training \\
-Match own statistics & mimicry, value replay: caught spatially, as neighbours disagree \\
-Hide in the daily cycle & pattern, cycle-shaped bias: caught spatially \\
-Corrupt neighbours & patch up to 6\,km: 69--73\,\% of attacks detected via the disjoint wider ring \\
-Shift whole network & neighbour checks blind ($<2\,\%$ alarms); an independent reference alarms on ${\sim}100\,\%$ of cells \\
-Stay below threshold & escape-magnitude sweep reports the largest size still missed per family \\
-Forge or replay records & deterministic Layer~1 rejection, audited \\
+Unseen attack types & withheld from training: pattern 81--85\,\%, mimicry 89--100\,\%, multivariate 89--96\,\% detected \\
+Different magnitudes & 2024: $\pm$0.75, 1.5, 3\,\textdegree C; training: $\pm$0.5, 1, 2, 4\,\textdegree C (inside the range: interpolation) \\
+Match own statistics & mimicry with training mean/variance: 89--100\,\% detected, spatially \\
+Hide in the daily cycle & pattern: 81--85\,\% detected \\
+Corrupt neighbours & patch up to 6\,km: 69--73\,\% detected via the wider ring \\
+Shift whole network$^\dagger$ & neighbours blind ($<2\,\%$ alarms); cross-source baseline alarms on ${\sim}100\,\%$ of cells \\
+Stay below threshold$^\dagger$ & escape sweep (rule baseline): largest size still missed per family \\
+Forge or replay records & Layer~1 rejects 100/100 tampered records, audited \\
 \bottomrule
 \end{tabular}
+
+\vspace{2pt}
+\footnotesize $^\dagger$Station suite, rule-based baselines (unit test and \code{eval/escape.py}); the trained
+detector is graded on it in Phase~2.
 \end{table}
 
 \subsection{Limitations}
@@ -284,13 +308,13 @@ readings): about 90\,\% of intervals are dry and only 773 attacked rain rows exi
 regional shift is not separable from real weather using in-situ data alone; this is where the remote-sensing
 input is required, through a cross-source check against ERA5-Land~\cite{era5land}. Grading the trained detector
 on the station suite and adding the cross-source reference are the main Phase~2 extensions. The 2024 attacks
-share their generator with training (with unseen sizes, placements and families), so the figures are strong
+share their generator with training (with new placements, interpolated sizes and three withheld families), so the figures are strong
 evidence rather than an independent benchmark.
 
 \section{Feasibility and Local Execution}
 
 \begin{table}[t]
-\caption{Cost on a laptop-class CPU (no GPU, no cloud)}
+\caption{Cost on a 2-core x86-64 CPU (no GPU, no cloud)}
 \label{tab:cost}
 \centering
 \small
@@ -298,25 +322,25 @@ evidence rather than an independent benchmark.
 \toprule
 Measurement & Value \\
 \midrule
-Live tick: new 30-min step, 486 streams, 24\,h history & median 202\,ms; p95 236\,ms \\
-Headroom versus the 30-min interval & $<0.02\,\%$ used \\
-Batch replay, 14 days (303\,264 readings) & 5.0\,s (16.5\,\textmu s/reading) \\
+Live tick (486 streams, 24\,h history) & median 202\,ms; p95 236\,ms \\
+Share of the 30-min interval used & $<0.02\,\%$ used \\
+Batch replay, 14 days & 5.0\,s (16.5\,\textmu s/reading) \\
 Detector peak memory / model size & 852\,MB / 17.6\,MB \\
-Ed25519 sign / verify (incl.\ chain) & ${\sim}$34\,900 / 11\,300 rec./s \\
+Ed25519 sign / verify (incl.\ chain) & 17\,700 / 8\,050 rec./s, one core \\
 Overhead per record & 104\,B (64 sig.\ + 8 seq.\ + 32 hash) \\
-Tampered records rejected / false rejections & 100/100, 0 \\
-Full training run & CPU, peak 3.5\,GB RAM \\
+Tampered rejected / false rejections & 100/100, 0 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:cost} summarises cost. Detector timings were measured on a 2-core x86-64 machine with the
-shipped artifacts; latency depends on array shape and model, not on values, so the measurement needs no data
+Table~\ref{tab:cost} summarises cost. All rows were measured on the same 2-core x86-64 machine, with the
+shipped artifacts (outputs in \code{reports/detector-overhead.json} and \code{reports/crypto-benchmark.json}); latency depends on array shape and model, not on values, so the measurement needs no data
 download. No purchase, GPU, cloud service or paid API is required, and dependencies are hash-locked.
 
 \section{Reproducibility}
 
-The test suite (745 passed, 17 skipped; skipped tests need a local broker) includes no-look-ahead and
+The test suite (745 passed, 17 skipped; skipped tests need a local broker; log in
+\code{reports/test-results.txt}) includes no-look-ahead and
 label-leakage tests for the detector. The frozen model ships with SHA-256 hashes; one command reproduces
 Table~\ref{tab:results} from the public data and another retrains from scratch. A jury guide documents
 installation, data download, every command and how to read each output, and a command-line tool lets the jury
@@ -326,12 +350,13 @@ reproduced with \code{python -m eval.detector\_overhead}.
 \section{Conclusion}
 
 Signatures and plausibility checks are complementary: Layer~1 makes record-level attacks deterministic, and
-the calibrated detector catches four out of five valid-signature attacks within about an hour at a low
-false-alarm rate, including attack families it never saw. Layer~4 ensures that what the detector misses or
+the calibrated detector raises an alert on about four out of five valid-signature attacks at a low
+false-alarm rate, including attack families it never saw, although it flags only about one in three
+manipulated readings and slow drifts are caught late. Layer~4 ensures that what the detector misses or
 flags does not silently reach the analyst. The remaining blind spot, coordinated regional bias, is exactly the
 case that requires combining in-situ data with remote-sensing references, which is the focus of Phase~2.
 
-\balance
+
 \begin{thebibliography}{1}
 \bibitem{wegenernet}
 J.~Fuchsberger, G.~Kirchengast, C.~Bichler, \emph{et al.}, ``WegenerNet climate station network Level~2 data
@@ -348,6 +373,25 @@ P.~Geurts, D.~Ernst, and L.~Wehenkel, ``Extremely randomized trees,'' \emph{Mach
 pp.~3--42, 2006.
 \bibitem{cusum}
 E.~S.~Page, ``Continuous inspection schemes,'' \emph{Biometrika}, vol.~41, no.~1/2, pp.~100--115, 1954.
+\bibitem{liu-fdi}
+Y.~Liu, P.~Ning, and M.~K.~Reiter, ``False data injection attacks against state estimation in electric power
+grids,'' in \emph{Proc.\ 16th ACM Conf.\ Computer and Communications Security (CCS)}, 2009, pp.~21--32.
+\bibitem{hubbard-qc}
+K.~G.~Hubbard, S.~Goddard, W.~D.~Sorensen, N.~Wells, and T.~T.~Osugi, ``Performance of quality assurance
+procedures for an applied climate information system,'' \emph{J.\ Atmos.\ Oceanic Technol.}, vol.~22, no.~1,
+pp.~105--112, 2005.
+\bibitem{iforest}
+F.~T.~Liu, K.~M.~Ting, and Z.-H.~Zhou, ``Isolation forest,'' in \emph{Proc.\ IEEE Int.\ Conf.\ Data Mining
+(ICDM)}, 2008, pp.~413--422.
+\bibitem{chandola}
+V.~Chandola, A.~Banerjee, and V.~Kumar, ``Anomaly detection: A survey,'' \emph{ACM Comput.\ Surv.}, vol.~41,
+no.~3, art.~15, 2009.
+\bibitem{vovk}
+V.~Vovk, A.~Gammerman, and G.~Shafer, \emph{Algorithmic Learning in a Random World}. New York, NY, USA:
+Springer, 2005.
+\bibitem{kim-pa}
+S.~Kim, K.~Choi, H.-S.~Choi, B.~Lee, and S.~Yoon, ``Towards a rigorous evaluation of time-series anomaly
+detection,'' in \emph{Proc.\ AAAI Conf.\ Artificial Intelligence}, 2022, pp.~7194--7201.
 \end{thebibliography}
 
 \end{document}

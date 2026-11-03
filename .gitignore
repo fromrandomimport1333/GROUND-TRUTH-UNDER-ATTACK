@@ -81,3 +81,5 @@ alarms/
 # The trained Layer 3 model is shipped in artifacts/ (data/ stays out of git)
 !/artifacts/calibration.npz
 !reports/detector-overhead.json
+!reports/test-results.txt
+!reports/crypto-benchmark.json

@@ -1,0 +1,38 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 28%]
+..............................s..................s...................... [ 37%]
+....................ssssssss............................................ [ 47%]
+..................ss..................................................s. [ 56%]
+........................................................................ [ 66%]
+...sss...........................................s...................... [ 75%]
+........................................................................ [ 85%]
+........................................................................ [ 94%]
+..........................................                               [100%]
+=============================== warnings summary ===============================
+../v2/lib/python3.13/site-packages/fastapi/testclient.py:1
+  .venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_halfhourly_integration.py:111: Set WN_HALFHOURLY_FILE for actual January 2023 data
+SKIPPED [1] tests/test_hourly_integration.py:185: Set WN_JANUARY_FILE for actual NetCDF integration
+SKIPPED [1] tests/test_phase2_broker.py:69: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase2_broker.py:91: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase2_broker.py:98: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase2_broker.py:105: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase2_broker.py:114: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase2_broker.py:125: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase2_broker.py:136: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase2_broker.py:147: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase3_mqtt.py:26: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase3_mqtt.py:52: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase4_integration.py:87: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase6_integration.py:35: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase6_integration.py:44: real broker tests require --run-broker
+SKIPPED [1] tests/test_phase6_integration.py:55: real broker tests require --run-broker
+SKIPPED [1] tests/test_pipeline.py:163: real broker tests require --run-broker
+745 passed, 17 skipped, 1 warning in 45.08s
+exit=0
+python=3.13.18 platform=Linux-6.18.44-fc-v230-x86_64-with-glibc2.39 cpus=2

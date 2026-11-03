@@ -60,13 +60,14 @@ and the same command run against it gives the honest "below this, residual risk"
 
 ## Efficiency & security overhead
 
-Measured on a 16-core laptop, Python 3.12, `cryptography` 50.0.2 (Ed25519), n = 10 000 records.
+Measured with `python -m eval.bench_crypto --n 10000` on the same 2-core x86-64 machine as the detector, Python 3.13,
+`cryptography` 50.0.2 (Ed25519), n = 10 000 records. Output: [`reports/crypto-benchmark.json`](../reports/crypto-benchmark.json).
 This is the Layer-1 provenance cost — the "security overhead" the brief asks for.
 
 | Metric | Value |
 |---|---|
-| Ed25519 sign throughput (incl. hash chaining) | ~34,900 records/s |
-| Ed25519 verify throughput (incl. chain-link check) | ~11,300 records/s |
+| Ed25519 sign throughput (incl. hash chaining) | ~17,700 records/s |
+| Ed25519 verify throughput (incl. chain-link check) | ~8,050 records/s |
 | Added bytes per record (sig 64 + seq 8 + prev_hash 32) | 104 B |
 | Wire record size (payload 16 B + overhead) | 120 B |
 | Verify failures on untampered stream | 0 |

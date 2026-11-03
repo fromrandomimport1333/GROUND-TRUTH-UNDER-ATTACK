@@ -11,7 +11,9 @@ physics, and a trained classifier decides whether the reading looks manipulated.
 quarantine.
 
 **Results in one paragraph.** On a full year (2024) of real WegenerNet data with synthetic attacks, the detector
-finds **79–82 % of attacks**, with a median of **60–90 minutes to the first alert**. **57–60 % of its alerts are
+raises an alert on **79–82 % of attacks** (at least one alert during the attack) and flags **32–35 % of the
+individual manipulated readings**; the median delay to the first alert was 60–90 minutes in the evaluation run
+(slow drifts: about 10 hours). **57–60 % of its alerts are
 real attacks**, and on clean data it raises **0.013 false-alert episodes per stream per day** (about one per
 stream every 2.5 months). Against a transparent rule ensemble built from the same signals, it **doubles F1
 (0.22 → 0.41)** and produces **3.5× fewer false alarms**. It runs on a laptop CPU.
@@ -363,7 +365,7 @@ data) and `outputs/` (metrics, per-variable and per-family tables, `RESULTS.md`)
   ([evaluation-suite.md](../../docs/evaluation-suite.md)). That suite uses 5-minute station data; this detector is
   trained on the half-hourly grid and must be retrained on station data before it can be graded there.
 - **Synthetic attacks on gridded data.** Grid cells are interpolated, not independent sensors. The 2024 attacks
-  use unseen amplitudes, new placements and three unseen families, but come from the same generator as the training
+  use amplitudes not used in training (but inside its range), new placements and three unseen families, but come from the same generator as the training
   attacks. The 2024 figures are therefore strong evidence, not an independent benchmark.
 - **Known weak spots.**
   - *Rain*: only 773 attacked rain rows are available for training, and scaling rain during dry periods changes

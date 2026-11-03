@@ -25,7 +25,7 @@ submission. "Evidence" points to the code, test or result that supports the clai
 | Report false alarms | Done | 0.013 false-alert episodes per stream-day on clean 2024 |
 | Report latency | Done | Detector live tick median 202 ms for 486 streams: [results.md](results.md#detector-latency-and-memory) |
 | Report memory | Done | Detector peak RSS 852 MB; Layer 1–2 in `reports/phase6-benchmark-linux.json` |
-| Report security overhead | Done | 104 B/record, ~11,300 verifications/s: [results.md](results.md#efficiency--security-overhead) |
+| Report security overhead | Done | 104 B/record, ~8,050 verifications/s ([crypto-benchmark.json](../reports/crypto-benchmark.json)): [results.md](results.md#efficiency--security-overhead) |
 | No purchase; local laptop execution | Done | CPU only, no GPU, cloud service or paid API |
 
 ## Phase 1 rules

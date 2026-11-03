@@ -5,6 +5,8 @@
 | File | Content | Produced by |
 |---|---|---|
 | `detector-overhead.json` | Layer 3 latency (live tick, batch episode), load time and peak memory | `python -m eval.detector_overhead` |
+| `crypto-benchmark.json` | Ed25519 sign/verify throughput, bytes per record, tamper rejection (2-core machine) | `python -m eval.bench_crypto --n 10000` |
+| `test-results.txt` | Full test-suite log: 745 passed, 17 skipped | `python -m pytest -q tests core/tests` |
 | `phase6-benchmark-linux.json` | Layer 1–2 cost: signing, verification, durable state, processing, message sizes | `python benchmark.py` |
 | `phase6-stability-linux.json` | Soak test: three sensors over mutual TLS with injected faults and recovery | `python stability.py` |
 | `environment.json` | Interpreter and dependency versions of the Layer 1–2 measurement machine | recorded with the Phase 6 benchmark |

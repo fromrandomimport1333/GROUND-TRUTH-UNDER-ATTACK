@@ -27,14 +27,15 @@ sensor ──signed record──▶ L1 provenance ──verdict──▶ L2 proc
 
 | | Result | Source |
 |---|---|---|
-| Attacks detected (2024, two seeds, 12 families) | 79–82 % of attack events; median 60–90 min to first alert | [core/docs/README.md § 5](core/docs/README.md#5-results) |
+| Attacks detected (2024, two seeds, 12 families) | at least one alert on 79–82 % of attacks; 32–35 % of manipulated readings flagged | [core/docs/README.md § 5](core/docs/README.md#5-results) |
 | Precision / F1 | 57–60 % / 0.41–0.44, about 1.9× the rule ensemble on the same signals | same |
 | False alarms on clean 2024 data | 0.013 episodes per stream-day (budget 0.05) | same |
 | Attack families never seen in training | 81–100 % of attacks detected (pattern, mimicry, multivariate; two seeds) | same |
 | In-transit and stored-record tampering | caught deterministically by Layer 1 (bad signature, replay, gap, unknown sensor) | [attack_catalogue.md](docs/attack_catalogue.md) |
 | Detector latency, live | ~0.2 s per 30-minute tick for all 486 streams (median, 2-core CPU) | [reports/detector-overhead.json](reports/detector-overhead.json) |
 | Detector memory | ~0.85 GB peak RSS; model artifacts 17.6 MB | same |
-| Security overhead | 104 bytes per record; ~11,000 verifications/s on one core | [results.md](docs/results.md#efficiency--security-overhead) |
+| Security overhead | 104 bytes per record; ~8,000 verifications/s and ~17,700 signatures/s on one core | [reports/crypto-benchmark.json](reports/crypto-benchmark.json) |
+| Test suite | 745 passed, 17 skipped (broker tests) | [reports/test-results.txt](reports/test-results.txt) |
 
 ## Quick start
 
