@@ -1,0 +1,124 @@
+$ .venv/bin/python -m pytest -q
+exit_code=0
+........................................................................ [ 63%]
+..........................................                               [100%]
+114 passed in 0.49s
+
+
+$ .venv/bin/python -m pytest -q -m integration
+exit_code=0
+......                                                                   [100%]
+6 passed, 108 deselected in 0.07s
+
+
+$ .venv/bin/python -m pip check
+exit_code=0
+No broken requirements found.
+
+
+$ .venv/bin/python scripts/check_environment.py --contracts-only
+exit_code=0
+{
+  "python": "3.14.8",
+  "python_target": "3.14",
+  "python_target_matches": true,
+  "system": "Linux",
+  "machine": "x86_64",
+  "packages": {
+    "pydantic": {
+      "version": "2.14.1",
+      "import_ok": true
+    },
+    "cryptography": {
+      "version": "50.0.2",
+      "import_ok": true
+    },
+    "pytest": {
+      "version": "9.1.1",
+      "import_ok": true
+    },
+    "paho-mqtt": {
+      "version": "2.1.0",
+      "import_ok": true
+    },
+    "cbor2": {
+      "version": "6.1.5",
+      "import_ok": true
+    },
+    "numpy": {
+      "version": "2.5.4",
+      "import_ok": true
+    },
+    "pandas": {
+      "version": "3.0.6",
+      "import_ok": true
+    }
+  },
+  "mosquitto": {
+    "installed": false,
+    "target_version": "2.1.2",
+    "target_matches": false
+  },
+  "git_available": true,
+  "vscode_cli_available": true,
+  "contracts_environment_ready": true,
+  "full_plan_environment_ready": false,
+  "broker_tls_tested": false,
+  "note": "No hostnames, user names, credentials or absolute local paths are recorded."
+}
+
+
+$ .venv/bin/python scripts/check_environment.py --output reports/environment.json
+exit_code=1
+{
+  "python": "3.14.8",
+  "python_target": "3.14",
+  "python_target_matches": true,
+  "system": "Linux",
+  "machine": "x86_64",
+  "packages": {
+    "pydantic": {
+      "version": "2.14.1",
+      "import_ok": true
+    },
+    "cryptography": {
+      "version": "50.0.2",
+      "import_ok": true
+    },
+    "pytest": {
+      "version": "9.1.1",
+      "import_ok": true
+    },
+    "paho-mqtt": {
+      "version": "2.1.0",
+      "import_ok": true
+    },
+    "cbor2": {
+      "version": "6.1.5",
+      "import_ok": true
+    },
+    "numpy": {
+      "version": "2.5.4",
+      "import_ok": true
+    },
+    "pandas": {
+      "version": "3.0.6",
+      "import_ok": true
+    }
+  },
+  "mosquitto": {
+    "installed": false,
+    "target_version": "2.1.2",
+    "target_matches": false
+  },
+  "git_available": true,
+  "vscode_cli_available": true,
+  "contracts_environment_ready": true,
+  "full_plan_environment_ready": false,
+  "broker_tls_tested": false,
+  "note": "No hostnames, user names, credentials or absolute local paths are recorded."
+}
+
+
+$ .venv/bin/python -m scripts.export_schemas
+exit_code=0

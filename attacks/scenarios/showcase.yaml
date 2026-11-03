@@ -1,0 +1,154 @@
+# Showcase suite: one hand-written scenario per implemented family on station "77",
+# July 2024, mid-size parameters. Used for the demo and the gallery figure.
+# Times are UTC (trailing Z); end is exclusive. Station ids are quoted strings.
+# Windows on the same variable never overlap (value faults are spread over air_temperature
+# and relative_humidity). Precipitation windows were chosen from the clean data:
+# rain_scale / rain_suppress sit on real rain at "77" (about 12 mm / 8 mm), rain_inject on a
+# window that is dry at "77" and at its five nearest neighbours.
+# multi_offset hits "77" plus its two nearest neighbours, "92" (1.21 km) and "76" (1.30 km).
+name: showcase
+seed: 7
+scenarios:
+  - id: showcase-offset-ai-0000
+    family: offset
+    variable: air_temperature
+    stations: ["77"]
+    start: "2024-07-03T00:00:00Z"
+    end: "2024-07-04T00:00:00Z"        # 24 h
+    params: {k: 2.0}
+    split: showcase
+
+  - id: showcase-drift-ai-0001
+    family: drift
+    variable: air_temperature
+    stations: ["77"]
+    start: "2024-07-06T00:00:00Z"
+    end: "2024-07-09T00:00:00Z"        # 72 h ramp = window
+    params: {k: 3.0}
+    split: showcase
+
+  - id: showcase-spike-ai-0002
+    family: spike
+    variable: air_temperature
+    stations: ["77"]
+    start: "2024-07-11T00:00:00Z"
+    end: "2024-07-12T00:00:00Z"        # 24 h
+    params: {k: 4.0, n: 3.0}
+    split: showcase
+
+  - id: showcase-noise-re-0003
+    family: noise
+    variable: relative_humidity
+    stations: ["77"]
+    start: "2024-07-04T00:00:00Z"
+    end: "2024-07-05T00:00:00Z"        # 24 h
+    params: {k: 2.0}
+    split: showcase
+
+  - id: showcase-flatline-ai-0004
+    family: flatline
+    variable: air_temperature
+    stations: ["77"]
+    start: "2024-07-15T10:00:00Z"
+    end: "2024-07-15T13:00:00Z"        # 3 h = w_steps
+    params: {w_steps: 36.0}
+    split: showcase
+
+  - id: showcase-stuck-re-0005
+    family: stuck
+    variable: relative_humidity
+    stations: ["77"]
+    start: "2024-07-09T12:00:00Z"
+    end: "2024-07-09T18:00:00Z"        # 6 h
+    params: {}
+    split: showcase
+
+  - id: showcase-multi_offset-ai-0006
+    family: multi_offset
+    variable: air_temperature
+    stations: ["77", "92", "76"]       # target + its n-1 = 2 nearest neighbours
+    start: "2024-07-25T00:00:00Z"
+    end: "2024-07-26T00:00:00Z"        # 24 h
+    params: {k: 2.0, n: 3.0}
+    split: showcase
+
+  - id: showcase-gain-re-0007
+    family: gain
+    variable: relative_humidity
+    stations: ["77"]
+    start: "2024-07-17T00:00:00Z"
+    end: "2024-07-18T00:00:00Z"        # 24 h
+    params: {g: 1.5}
+    split: showcase
+
+  - id: showcase-intermittent_offset-re-0008
+    family: intermittent_offset
+    variable: relative_humidity
+    stations: ["77"]
+    start: "2024-07-22T00:00:00Z"
+    end: "2024-07-24T00:00:00Z"        # 48 h
+    params: {k: 3.0}
+    split: showcase
+
+  - id: showcase-rain_scale-pr-0009
+    family: rain_scale
+    variable: precipitation
+    stations: ["77"]
+    start: "2024-07-13T16:00:00Z"
+    end: "2024-07-13T22:00:00Z"        # 6 h, ~12 mm of real rain inside
+    params: {f: 2.0}
+    split: showcase
+
+  - id: showcase-rain_suppress-pr-0010
+    family: rain_suppress
+    variable: precipitation
+    stations: ["77"]
+    start: "2024-07-28T12:00:00Z"
+    end: "2024-07-28T18:00:00Z"        # 6 h, ~8 mm of real rain inside
+    params: {}
+    split: showcase
+
+  - id: showcase-rain_inject-pr-0011
+    family: rain_inject
+    variable: precipitation
+    stations: ["77"]
+    start: "2024-07-16T12:00:00Z"
+    end: "2024-07-16T15:00:00Z"        # 3 h = duration_steps, dry at 77 and its 5 nearest
+    params: {total_mm: 10.0, duration_steps: 36.0}
+    split: showcase
+
+  - id: showcase-realistic_replace-ai-0012
+    family: realistic_replace
+    variable: air_temperature
+    stations: ["77"]
+    start: "2024-07-19T00:00:00Z"
+    end: "2024-07-20T00:00:00Z"        # 24 h; window resampled from 77's own prior 30 days
+    params: {k: 1.0, generator: 0.0}   # generator 0 = empirical resample by time-of-day
+    split: showcase
+
+  - id: showcase-cycle_shaped-re-0013
+    family: cycle_shaped
+    variable: relative_humidity
+    stations: ["77"]
+    start: "2024-07-19T00:00:00Z"
+    end: "2024-07-20T00:00:00Z"        # 24 h; bias rides inside 77's diurnal RH cycle
+    params: {k: 2.0}
+    split: showcase
+
+  - id: showcase-network_bias-ai-0014
+    family: network_bias
+    variable: air_temperature
+    stations: ["77", "92", "76"]       # whole local cluster shifted together
+    start: "2024-07-20T06:00:00Z"
+    end: "2024-07-21T06:00:00Z"        # 24 h; only a cross-source check catches this
+    params: {k: 2.0}
+    split: showcase
+
+  - id: showcase-value_replay-ai-0015
+    family: value_replay
+    variable: air_temperature
+    stations: ["77"]
+    start: "2024-07-22T00:00:00Z"
+    end: "2024-07-23T00:00:00Z"        # 24 h; verbatim copy of 77's readings from 7 days earlier
+    params: {days_back: 7.0, noise: 0.33}
+    split: showcase

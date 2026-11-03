@@ -1,0 +1,16 @@
+{
+  "window_seconds": 60,
+  "rolling_samples": 5,
+  "constant_tolerance_c": 0.0,
+  "spectral_min_samples": 8,
+  "spectral_relative_jitter": 0.01,
+  "max_events": 10000,
+  "max_sensors": 100,
+  "max_references": 10000,
+  "neighbor_pairs": [],
+  "spatial_max_age_seconds": 10.0,
+  "spatial_max_distance_km": 50.0,
+  "reference_sources": [],
+  "reference_max_age_seconds": 3600.0,
+  "reference_max_distance_km": 50.0
+}

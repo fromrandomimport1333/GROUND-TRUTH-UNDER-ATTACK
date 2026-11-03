@@ -1,0 +1,12 @@
+Actual result summaries (not a complete terminal transcript).
+
+Focused Phase 5 unit/integration run:
+python -m pytest -q tests/test_phase5_attacks.py tests/test_pipeline.py
+42 passed, 1 skipped in 7.98s
+The real broker test was skipped because --run-broker was not supplied.
+
+Cumulative Phases 1-5 run with real Mosquitto 2.1.2:
+python -m pytest -q tests --run-broker --broker-executable PATH_TO_MOSQUITTO
+361 passed in 15.69s
+Exit code: 0
+Platform: Linux; CPython 3.14.8.

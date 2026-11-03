@@ -1,0 +1,19 @@
+$ .venv/bin/python -m pytest -q --run-broker --broker-executable <MOSQUITTO_2.1.2_EXECUTABLE> tests
+exit_code=0
+........................................................................ [ 39%]
+........................................................................ [ 78%]
+........................................                                 [100%]
+184 passed in 3.56s
+
+
+$ .venv/bin/python -m scripts.demo_signing
+exit_code=0
+sensor_01: 3 SIGNED; CBOR ROUNDTRIP OK; CHAIN CREATED; TAMPERING CHECK OK
+sensor_02: 3 SIGNED; CBOR ROUNDTRIP OK; CHAIN CREATED; TAMPERING CHECK OK
+sensor_03: 3 SIGNED; CBOR ROUNDTRIP OK; CHAIN CREATED; TAMPERING CHECK OK
+OFFLINE L1a DEMO PASSED; no broker or Layer 1b verifier was used.
+
+
+$ .venv/bin/python -m pip check
+exit_code=0
+No broken requirements found.

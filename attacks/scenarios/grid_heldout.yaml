@@ -1,0 +1,52 @@
+# Held-out grid (spec section 6, heldout columns): sizes, durations and stations disjoint from
+# dev, plus the two shapes never seen in development (gain, intermittent_offset).
+# 178 base specs before placement:
+#   value families: 42 cells x 2 variables x 2 replicates = 168
+#   precipitation :  5 cells x 2 replicates               =  10
+name: heldout
+seed: 20263
+split: heldout
+variables: [air_temperature, relative_humidity, precipitation]
+months: null
+station_pool: heldout   # the 30 % held-out stations
+max_stations: null
+replicates: 2
+durations_h: [12, 48, 120]    # offset, noise (families without their own window)
+families:
+  offset:
+    k: [0.75, 1.5, 4]
+  noise:
+    k: [0.75, 1.5, 4]
+  drift:                      # ramp length = window length
+    k: [1.5, 4]
+    ramp_h: [120, 240]
+  spike:
+    k: [3, 6]
+    n: [2, 4]
+    duration_h: [48]
+  flatline:                   # window = w
+    w_h: [2, 4]
+  stuck:
+    duration_h: [12, 48]
+  multi_offset:
+    k: [3]
+    n: [4, 6]
+    duration_h: [48]
+  gain:                       # held-out only: window mean + g * (x - window mean)
+    g: [0.5, 1.5, 2]
+    duration_h: [24, 72]
+  intermittent_offset:        # held-out only: offset on alternating 1 h blocks
+    k: [1.5, 3]
+    duration_h: [48, 120]
+  value_replay:               # held-out only: verbatim past-window replay + noise (strong evasion)
+    days_back: [1, 7]
+    noise: [0.0, 0.33]
+    duration_h: [24, 48]
+  rain_scale:
+    f: [0.75, 2.5]
+    duration_h: [12]
+  rain_suppress:
+    duration_h: [12]
+  rain_inject:                # event duration = window
+    total_mm: [7, 15]
+    duration_h: [2]

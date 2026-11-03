@@ -1,0 +1,30 @@
+{
+  "python": "3.13.18",
+  "platform": "Linux-6.18.44-fc-v230-x86_64-with-glibc2.39",
+  "cpu_count": 2,
+  "rss_after_imports_mb": 189.2,
+  "load_s": 0.327,
+  "rss_after_load_mb": 292.5,
+  "episode": {
+    "steps": 672,
+    "sites": 162,
+    "variables": 3,
+    "seconds": 4.995,
+    "scored_readings": 303264,
+    "us_per_reading": 16.47
+  },
+  "rss_after_episode_mb": 852.4,
+  "live_tick": {
+    "ticks": 50,
+    "history_steps": 48,
+    "readings_per_tick": 486,
+    "median_ms": 202.3,
+    "p95_ms": 235.6,
+    "max_ms": 275.8,
+    "budget_ms": 1800000,
+    "median_ms_per_reading": 0.416
+  },
+  "peak_rss_mb": 852.4,
+  "artifacts_mb": 17.6,
+  "input": "synthetic, production shape (see module docstring)"
+}

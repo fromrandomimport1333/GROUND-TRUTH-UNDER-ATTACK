@@ -1,0 +1,926 @@
+{
+  "schema_version": "1.0",
+  "kind": "phase6_benchmark",
+  "source": "synthetic",
+  "environment": {
+    "python": "3.14.8",
+    "system": "Linux",
+    "machine": "x86_64"
+  },
+  "configuration": {
+    "iterations_per_series": 50,
+    "series": 3,
+    "warmup": 5
+  },
+  "stages": {
+    "ed25519_sign_primitive": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.03502526,
+          "min_ms": 0.031347,
+          "max_ms": 0.101513,
+          "p50_ms": 0.031487,
+          "p95_ms": 0.053741,
+          "p99_ms": 0.101513,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.03258466,
+          "min_ms": 0.031308,
+          "max_ms": 0.054733,
+          "p50_ms": 0.031457,
+          "p95_ms": 0.045028,
+          "p99_ms": 0.054733,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.03172156,
+          "min_ms": 0.031327,
+          "max_ms": 0.043145,
+          "p50_ms": 0.031467,
+          "p95_ms": 0.031708,
+          "p99_ms": 0.043145,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.03311049333333333,
+        "min_ms": 0.031308,
+        "max_ms": 0.101513,
+        "p50_ms": 0.031467,
+        "p95_ms": 0.043145,
+        "p99_ms": 0.089195,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "ed25519_verify_primitive": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.10672530000000001,
+          "min_ms": 0.102023,
+          "max_ms": 0.165389,
+          "p50_ms": 0.103166,
+          "p95_ms": 0.128633,
+          "p99_ms": 0.165389,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.10652102000000001,
+          "min_ms": 0.101944,
+          "max_ms": 0.184228,
+          "p50_ms": 0.103035,
+          "p95_ms": 0.116275,
+          "p99_ms": 0.184228,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.10587126,
+          "min_ms": 0.101874,
+          "max_ms": 0.142826,
+          "p50_ms": 0.103035,
+          "p95_ms": 0.130536,
+          "p99_ms": 0.142826,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.10637252666666668,
+        "min_ms": 0.101874,
+        "max_ms": 0.184228,
+        "p50_ms": 0.103055,
+        "p95_ms": 0.128633,
+        "p99_ms": 0.165389,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "canonical_cbor_signed_encode": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.01272358,
+          "min_ms": 0.011507,
+          "max_ms": 0.032038,
+          "p50_ms": 0.012018,
+          "p95_ms": 0.01336,
+          "p99_ms": 0.032038,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.01197208,
+          "min_ms": 0.011437,
+          "max_ms": 0.014111,
+          "p50_ms": 0.011868,
+          "p95_ms": 0.012779,
+          "p99_ms": 0.014111,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.01233372,
+          "min_ms": 0.011427,
+          "max_ms": 0.027211,
+          "p50_ms": 0.011948,
+          "p95_ms": 0.01334,
+          "p99_ms": 0.027211,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.012343126666666667,
+        "min_ms": 0.011427,
+        "max_ms": 0.032038,
+        "p50_ms": 0.011928,
+        "p95_ms": 0.01327,
+        "p99_ms": 0.027211,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "canonical_cbor_signed_encode_only": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.00565908,
+          "min_ms": 0.005288,
+          "max_ms": 0.00636,
+          "p50_ms": 0.005608,
+          "p95_ms": 0.00623,
+          "p99_ms": 0.00636,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.00582854,
+          "min_ms": 0.005168,
+          "max_ms": 0.019059,
+          "p50_ms": 0.005488,
+          "p95_ms": 0.006099,
+          "p99_ms": 0.019059,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.0054760600000000005,
+          "min_ms": 0.005258,
+          "max_ms": 0.006389,
+          "p50_ms": 0.005418,
+          "p95_ms": 0.005819,
+          "p99_ms": 0.006389,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.00565456,
+        "min_ms": 0.005168,
+        "max_ms": 0.019059,
+        "p50_ms": 0.005518,
+        "p95_ms": 0.006099,
+        "p99_ms": 0.007411,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "canonical_cbor_unsigned_encode": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.0046155,
+          "min_ms": 0.004357,
+          "max_ms": 0.005158,
+          "p50_ms": 0.004586,
+          "p95_ms": 0.004958,
+          "p99_ms": 0.005158,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.00617642,
+          "min_ms": 0.004407,
+          "max_ms": 0.050536,
+          "p50_ms": 0.004657,
+          "p95_ms": 0.005248,
+          "p99_ms": 0.050536,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.0048258599999999995,
+          "min_ms": 0.004466,
+          "max_ms": 0.006761,
+          "p50_ms": 0.004727,
+          "p95_ms": 0.005418,
+          "p99_ms": 0.006761,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.005205926666666666,
+        "min_ms": 0.004357,
+        "max_ms": 0.050536,
+        "p50_ms": 0.004667,
+        "p95_ms": 0.005158,
+        "p99_ms": 0.03329,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "bounded_cbor_decode_and_contract": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.02859144,
+          "min_ms": 0.025909,
+          "max_ms": 0.051527,
+          "p50_ms": 0.027131,
+          "p95_ms": 0.043285,
+          "p99_ms": 0.051527,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.02744668,
+          "min_ms": 0.025669,
+          "max_ms": 0.046109,
+          "p50_ms": 0.02666,
+          "p95_ms": 0.030045,
+          "p99_ms": 0.046109,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.03634454,
+          "min_ms": 0.025739,
+          "max_ms": 0.206361,
+          "p50_ms": 0.02718,
+          "p95_ms": 0.06002,
+          "p99_ms": 0.206361,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.03079422,
+        "min_ms": 0.025669,
+        "max_ms": 0.206361,
+        "p50_ms": 0.026891,
+        "p95_ms": 0.046501,
+        "p99_ms": 0.168284,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "json_signed_encode_hex_binary": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.00349252,
+          "min_ms": 0.003225,
+          "max_ms": 0.004287,
+          "p50_ms": 0.003426,
+          "p95_ms": 0.003946,
+          "p99_ms": 0.004287,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.0033756999999999997,
+          "min_ms": 0.003195,
+          "max_ms": 0.004197,
+          "p50_ms": 0.003325,
+          "p95_ms": 0.003635,
+          "p99_ms": 0.004197,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.0034306999999999996,
+          "min_ms": 0.003174,
+          "max_ms": 0.003846,
+          "p50_ms": 0.003406,
+          "p95_ms": 0.003686,
+          "p99_ms": 0.003846,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.0034329733333333333,
+        "min_ms": 0.003174,
+        "max_ms": 0.004287,
+        "p50_ms": 0.003395,
+        "p95_ms": 0.003846,
+        "p99_ms": 0.004197,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "chain_record_hash": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.01426136,
+          "min_ms": 0.012208,
+          "max_ms": 0.073381,
+          "p50_ms": 0.012679,
+          "p95_ms": 0.016665,
+          "p99_ms": 0.073381,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.01364014,
+          "min_ms": 0.012209,
+          "max_ms": 0.036355,
+          "p50_ms": 0.01276,
+          "p95_ms": 0.017977,
+          "p99_ms": 0.036355,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.014255,
+          "min_ms": 0.012228,
+          "max_ms": 0.055554,
+          "p50_ms": 0.012649,
+          "p95_ms": 0.020751,
+          "p99_ms": 0.055554,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.014052166666666666,
+        "min_ms": 0.012208,
+        "max_ms": 0.073381,
+        "p50_ms": 0.012699,
+        "p95_ms": 0.017977,
+        "p99_ms": 0.055554,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "structural_contract_only": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.00430766,
+          "min_ms": 0.004146,
+          "max_ms": 0.004677,
+          "p50_ms": 0.004297,
+          "p95_ms": 0.004447,
+          "p99_ms": 0.004677,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.00431948,
+          "min_ms": 0.004096,
+          "max_ms": 0.004857,
+          "p50_ms": 0.004287,
+          "p95_ms": 0.004547,
+          "p99_ms": 0.004857,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.0043083,
+          "min_ms": 0.004136,
+          "max_ms": 0.004707,
+          "p50_ms": 0.004307,
+          "p95_ms": 0.004596,
+          "p99_ms": 0.004707,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.0043118133333333334,
+        "min_ms": 0.004096,
+        "max_ms": 0.004857,
+        "p50_ms": 0.004297,
+        "p95_ms": 0.004536,
+        "p99_ms": 0.004737,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "normalize_only_16_readings": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 0.24253606,
+          "min_ms": 0.23228,
+          "max_ms": 0.384849,
+          "p50_ms": 0.235004,
+          "p95_ms": 0.268764,
+          "p99_ms": 0.384849,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.24223516,
+          "min_ms": 0.232901,
+          "max_ms": 0.39196,
+          "p50_ms": 0.235034,
+          "p95_ms": 0.264669,
+          "p99_ms": 0.39196,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 0.2503434,
+          "min_ms": 0.233051,
+          "max_ms": 0.390167,
+          "p50_ms": 0.236005,
+          "p95_ms": 0.326542,
+          "p99_ms": 0.390167,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 0.24503820666666667,
+        "min_ms": 0.23228,
+        "max_ms": 0.39196,
+        "p50_ms": 0.235435,
+        "p95_ms": 0.282015,
+        "p99_ms": 0.390167,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "layer2_16_reading_window": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 1.6031266599999998,
+          "min_ms": 1.442052,
+          "max_ms": 4.221879,
+          "p50_ms": 1.490435,
+          "p95_ms": 1.817017,
+          "p99_ms": 4.221879,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 1.6245053600000001,
+          "min_ms": 1.434931,
+          "max_ms": 4.312346,
+          "p50_ms": 1.52685,
+          "p95_ms": 1.865439,
+          "p99_ms": 4.312346,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 1.4898868200000002,
+          "min_ms": 1.428051,
+          "max_ms": 1.854713,
+          "p50_ms": 1.472147,
+          "p95_ms": 1.642583,
+          "p99_ms": 1.854713,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 1.57250628,
+        "min_ms": 1.428051,
+        "max_ms": 4.312346,
+        "p50_ms": 1.491236,
+        "p95_ms": 1.810036,
+        "p99_ms": 4.221879,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "sign_with_chain_and_durable_outbox": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 1.617329,
+          "min_ms": 1.203212,
+          "max_ms": 3.025992,
+          "p50_ms": 1.51381,
+          "p95_ms": 2.34397,
+          "p99_ms": 3.025992,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 1.5056791399999998,
+          "min_ms": 1.133217,
+          "max_ms": 2.350841,
+          "p50_ms": 1.469543,
+          "p95_ms": 1.942085,
+          "p99_ms": 2.350841,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 1.61209006,
+          "min_ms": 1.217514,
+          "max_ms": 3.223885,
+          "p50_ms": 1.532698,
+          "p95_ms": 2.23805,
+          "p99_ms": 3.223885,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 1.5783660666666666,
+        "min_ms": 1.133217,
+        "max_ms": 3.223885,
+        "p50_ms": 1.505888,
+        "p95_ms": 2.07831,
+        "p99_ms": 3.025992,
+        "percentile_method": "nearest_rank"
+      }
+    },
+    "verify_with_decode_policy_and_durable_journal": {
+      "series": [
+        {
+          "samples": 50,
+          "mean_ms": 1.8474449,
+          "min_ms": 1.313068,
+          "max_ms": 4.4427,
+          "p50_ms": 1.675423,
+          "p95_ms": 3.17407,
+          "p99_ms": 4.4427,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 1.6605358799999999,
+          "min_ms": 1.30794,
+          "max_ms": 2.960539,
+          "p50_ms": 1.615533,
+          "p95_ms": 2.082767,
+          "p99_ms": 2.960539,
+          "percentile_method": "nearest_rank"
+        },
+        {
+          "samples": 50,
+          "mean_ms": 1.88404806,
+          "min_ms": 1.305095,
+          "max_ms": 4.353045,
+          "p50_ms": 1.731137,
+          "p95_ms": 2.514337,
+          "p99_ms": 4.353045,
+          "percentile_method": "nearest_rank"
+        }
+      ],
+      "pooled": {
+        "samples": 150,
+        "mean_ms": 1.7973429466666668,
+        "min_ms": 1.305095,
+        "max_ms": 4.4427,
+        "p50_ms": 1.665939,
+        "p95_ms": 2.514337,
+        "p99_ms": 4.353045,
+        "percentile_method": "nearest_rank"
+      }
+    }
+  },
+  "controlled_comparisons": {
+    "signed_fields_encoding": {
+      "enabled_stage": "canonical_cbor_signed_encode_only",
+      "control_stage": "canonical_cbor_unsigned_encode",
+      "mean_difference_ms": 0.0004486333333333344,
+      "mean_ratio": 1.0861774208626325
+    },
+    "cbor_vs_json_encoding": {
+      "enabled_stage": "canonical_cbor_signed_encode_only",
+      "control_stage": "json_signed_encode_hex_binary",
+      "mean_difference_ms": 0.002221586666666667,
+      "mean_ratio": 1.647131932280278
+    },
+    "features_alignment_window_vs_normalize_only": {
+      "enabled_stage": "layer2_16_reading_window",
+      "control_stage": "normalize_only_16_readings",
+      "mean_difference_ms": 1.3274680733333333,
+      "mean_ratio": 6.41739221565203
+    }
+  },
+  "message_sizes": {
+    "signed_cbor_bytes": 328,
+    "without_signature_and_prev_hash_cbor_bytes": 208,
+    "signature_and_chain_fields_added_bytes": 120,
+    "signed_json_hex_binary_bytes": 471
+  },
+  "resources": {
+    "iterations": 50,
+    "wall_seconds": 0.2162092839998877,
+    "process_cpu_seconds": 0.21617674300000012,
+    "cpu_percent_one_core": 99.98494930500412,
+    "python_traced_current_bytes": 61839,
+    "python_traced_peak_bytes": 172326,
+    "memory_before": {
+      "rss_bytes": 63741952,
+      "lifetime_peak_rss_bytes": 63758336,
+      "method": "proc statm and getrusage"
+    },
+    "memory_after": {
+      "rss_bytes": 64069632,
+      "lifetime_peak_rss_bytes": 63934464,
+      "method": "proc statm and getrusage"
+    },
+    "scope": "Python process only; broker process excluded; tracemalloc enabled for this separate resource pass"
+  },
+  "limitations": [
+    "Synthetic single-process workload; not deployment throughput.",
+    "Durable stages include SQLite filesystem costs; primitive stages exclude them.",
+    "Unsigned CBOR and structural-only controls do not provide equivalent security.",
+    "Per-stage samples are descriptive; percentiles from small samples are coarse.",
+    "No detector evaluation or performance threshold is asserted."
+  ],
+  "transport": {
+    "mtls": {
+      "connection_setup_to_connack": {
+        "series": [
+          {
+            "samples": 5,
+            "mean_ms": 47.9805244,
+            "min_ms": 47.530221,
+            "max_ms": 48.468509,
+            "p50_ms": 47.997911,
+            "p95_ms": 48.468509,
+            "p99_ms": 48.468509,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 5,
+            "mean_ms": 47.989060200000004,
+            "min_ms": 47.951215,
+            "max_ms": 48.036985,
+            "p50_ms": 47.980634,
+            "p95_ms": 48.036985,
+            "p99_ms": 48.036985,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 5,
+            "mean_ms": 47.987878200000004,
+            "min_ms": 46.983678,
+            "max_ms": 49.064983,
+            "p50_ms": 47.993148,
+            "p95_ms": 49.064983,
+            "p99_ms": 49.064983,
+            "percentile_method": "nearest_rank"
+          }
+        ],
+        "pooled": {
+          "samples": 15,
+          "mean_ms": 47.98582093333333,
+          "min_ms": 46.983678,
+          "max_ms": 49.064983,
+          "p50_ms": 47.993148,
+          "p95_ms": 49.064983,
+          "p99_ms": 49.064983,
+          "percentile_method": "nearest_rank"
+        }
+      },
+      "publish_to_broker_puback": {
+        "series": [
+          {
+            "samples": 50,
+            "mean_ms": 0.3205263,
+            "min_ms": 0.174794,
+            "max_ms": 1.28836,
+            "p50_ms": 0.302014,
+            "p95_ms": 0.4184,
+            "p99_ms": 1.28836,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 50,
+            "mean_ms": 0.2967551,
+            "min_ms": 0.181994,
+            "max_ms": 0.551591,
+            "p50_ms": 0.279852,
+            "p95_ms": 0.426752,
+            "p99_ms": 0.551591,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 50,
+            "mean_ms": 0.3361651,
+            "min_ms": 0.226812,
+            "max_ms": 0.582517,
+            "p50_ms": 0.320633,
+            "p95_ms": 0.510009,
+            "p99_ms": 0.582517,
+            "percentile_method": "nearest_rank"
+          }
+        ],
+        "pooled": {
+          "samples": 150,
+          "mean_ms": 0.3178155,
+          "min_ms": 0.174794,
+          "max_ms": 1.28836,
+          "p50_ms": 0.310348,
+          "p95_ms": 0.449617,
+          "p99_ms": 0.582517,
+          "percentile_method": "nearest_rank"
+        }
+      },
+      "publish_to_subscriber_callback": {
+        "series": [
+          {
+            "samples": 50,
+            "mean_ms": 0.25319144,
+            "min_ms": 0.15264,
+            "max_ms": 0.473443,
+            "p50_ms": 0.239125,
+            "p95_ms": 0.366052,
+            "p99_ms": 0.473443,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 50,
+            "mean_ms": 0.28284371999999997,
+            "min_ms": 0.186626,
+            "max_ms": 0.478005,
+            "p50_ms": 0.271534,
+            "p95_ms": 0.402972,
+            "p99_ms": 0.478005,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 50,
+            "mean_ms": 0.26216659999999997,
+            "min_ms": 0.145184,
+            "max_ms": 0.694731,
+            "p50_ms": 0.228599,
+            "p95_ms": 0.416583,
+            "p99_ms": 0.694731,
+            "percentile_method": "nearest_rank"
+          }
+        ],
+        "pooled": {
+          "samples": 150,
+          "mean_ms": 0.26606725333333336,
+          "min_ms": 0.145184,
+          "max_ms": 0.694731,
+          "p50_ms": 0.252615,
+          "p95_ms": 0.402972,
+          "p99_ms": 0.503153,
+          "percentile_method": "nearest_rank"
+        }
+      }
+    },
+    "plaintext_loopback_control": {
+      "connection_setup_to_connack": {
+        "series": [
+          {
+            "samples": 5,
+            "mean_ms": 0.620214,
+            "min_ms": 0.420634,
+            "max_ms": 0.93637,
+            "p50_ms": 0.545131,
+            "p95_ms": 0.93637,
+            "p99_ms": 0.93637,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 5,
+            "mean_ms": 0.550437,
+            "min_ms": 0.439001,
+            "max_ms": 0.661596,
+            "p50_ms": 0.539533,
+            "p95_ms": 0.661596,
+            "p99_ms": 0.661596,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 5,
+            "mean_ms": 0.542713,
+            "min_ms": 0.40545,
+            "max_ms": 0.68431,
+            "p50_ms": 0.52472,
+            "p95_ms": 0.68431,
+            "p99_ms": 0.68431,
+            "percentile_method": "nearest_rank"
+          }
+        ],
+        "pooled": {
+          "samples": 15,
+          "mean_ms": 0.5711213333333334,
+          "min_ms": 0.40545,
+          "max_ms": 0.93637,
+          "p50_ms": 0.539533,
+          "p95_ms": 0.93637,
+          "p99_ms": 0.93637,
+          "percentile_method": "nearest_rank"
+        }
+      },
+      "publish_to_broker_puback": {
+        "series": [
+          {
+            "samples": 50,
+            "mean_ms": 0.24299926000000002,
+            "min_ms": 0.1591,
+            "max_ms": 0.336076,
+            "p50_ms": 0.239371,
+            "p95_ms": 0.310809,
+            "p99_ms": 0.336076,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 50,
+            "mean_ms": 0.24350388,
+            "min_ms": 0.171689,
+            "max_ms": 0.540114,
+            "p50_ms": 0.233602,
+            "p95_ms": 0.314353,
+            "p99_ms": 0.540114,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 50,
+            "mean_ms": 0.25330968,
+            "min_ms": 0.13937,
+            "max_ms": 0.482346,
+            "p50_ms": 0.248484,
+            "p95_ms": 0.337478,
+            "p99_ms": 0.482346,
+            "percentile_method": "nearest_rank"
+          }
+        ],
+        "pooled": {
+          "samples": 150,
+          "mean_ms": 0.24660427333333335,
+          "min_ms": 0.13937,
+          "max_ms": 0.540114,
+          "p50_ms": 0.240092,
+          "p95_ms": 0.320523,
+          "p99_ms": 0.482346,
+          "percentile_method": "nearest_rank"
+        }
+      },
+      "publish_to_subscriber_callback": {
+        "series": [
+          {
+            "samples": 50,
+            "mean_ms": 0.15216958,
+            "min_ms": 0.089094,
+            "max_ms": 0.295716,
+            "p50_ms": 0.136967,
+            "p95_ms": 0.233372,
+            "p99_ms": 0.295716,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 50,
+            "mean_ms": 0.18319926,
+            "min_ms": 0.095024,
+            "max_ms": 0.864362,
+            "p50_ms": 0.177948,
+            "p95_ms": 0.234543,
+            "p99_ms": 0.864362,
+            "percentile_method": "nearest_rank"
+          },
+          {
+            "samples": 50,
+            "mean_ms": 0.17646795999999998,
+            "min_ms": 0.107001,
+            "max_ms": 0.377438,
+            "p50_ms": 0.176265,
+            "p95_ms": 0.263567,
+            "p99_ms": 0.377438,
+            "percentile_method": "nearest_rank"
+          }
+        ],
+        "pooled": {
+          "samples": 150,
+          "mean_ms": 0.17061226666666665,
+          "min_ms": 0.089094,
+          "max_ms": 0.864362,
+          "p50_ms": 0.161573,
+          "p95_ms": 0.237718,
+          "p99_ms": 0.377438,
+          "percentile_method": "nearest_rank"
+        }
+      }
+    },
+    "comparison": {
+      "connection_setup_to_connack": {
+        "mtls_minus_plain_mean_ms": 47.4146996,
+        "mtls_to_plain_ratio": 84.02036158107674
+      },
+      "publish_to_broker_puback": {
+        "mtls_minus_plain_mean_ms": 0.07121122666666663,
+        "mtls_to_plain_ratio": 1.2887672046559018
+      },
+      "publish_to_subscriber_callback": {
+        "mtls_minus_plain_mean_ms": 0.09545498666666671,
+        "mtls_to_plain_ratio": 1.559484898311337
+      }
+    },
+    "scope": "Owned loopback broker, synthetic identical CBOR payload, QoS 1. Callback latency is transport-only, not verification. Plaintext is evaluation-only and lacks equivalent authentication. TLS setup includes certificate/context loading and CONNACK. Sequential modes are not randomized causal estimates; small differences can be noise."
+  }
+}

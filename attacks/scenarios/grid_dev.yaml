@@ -1,0 +1,42 @@
+# Development grid (spec section 6, dev columns). Sizes k/g/f/total_mm in sigma_ref units or
+# multiples as noted; every duration is in HOURS and is converted to 5-min steps by
+# attacks.grid.expand. ~340 base specs before placement:
+#   value families: 72 cells x 2 variables x 2 replicates = 288
+#   precipitation : 18 cells x 3 replicates               =  54
+name: dev
+seed: 20262
+split: dev
+variables: [air_temperature, relative_humidity, precipitation]
+months: null            # whole of 2024; placement restricts precipitation to months 4-10
+station_pool: dev       # the 70 % development stations (split seed 2026)
+max_stations: null
+replicates: 2           # value families
+precip_replicates: 3    # precipitation families
+durations_h: [1, 6, 24, 72]   # offset, noise, stuck (families without their own window)
+families:
+  offset:
+    k: [0.5, 1, 2, 3, 5]
+  noise:
+    k: [0.5, 1, 2, 3, 5]
+  drift:                      # ramp length = window length
+    k: [1, 2, 3, 5]
+    ramp_h: [24, 72, 168]
+  spike:                      # one fixed window
+    k: [2, 4, 8]
+    n: [1, 3, 6]
+    duration_h: [24]
+  flatline:                   # window = w
+    w_h: [1, 3, 6]
+  stuck: {}                   # no size parameter; uses durations_h
+  multi_offset:               # one fixed window; n = stations hit (target + n-1 neighbours)
+    k: [2]
+    n: [2, 3, 5, 8]
+    duration_h: [24]
+  rain_scale:
+    f: [0.5, 1.5, 2, 3]
+    duration_h: [6, 24]
+  rain_suppress:
+    duration_h: [6, 24]
+  rain_inject:                # event duration = window
+    total_mm: [2, 5, 10, 20]
+    duration_h: [1, 3]

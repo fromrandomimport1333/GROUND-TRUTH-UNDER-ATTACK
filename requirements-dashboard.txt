@@ -1,0 +1,5 @@
+# Layer 4 dashboard (optional): pip install -r requirements-dashboard.txt
+fastapi==0.162.0
+uvicorn==0.54.0
+# tests only (fastapi.testclient)
+httpx==0.28.1

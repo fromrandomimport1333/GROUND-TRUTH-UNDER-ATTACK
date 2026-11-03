@@ -1,0 +1,505 @@
+{
+  "$defs": {
+    "FeatureGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "default": "not_computed",
+          "enum": [
+            "not_computed",
+            "available",
+            "unavailable"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "values": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/FeatureValue"
+          },
+          "maxItems": 4096,
+          "title": "Values",
+          "type": "array"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        }
+      },
+      "title": "FeatureGroup",
+      "type": "object"
+    },
+    "FeatureValue": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Name",
+          "type": "string"
+        },
+        "sensor_id": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sensor Id"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "maxLength": 32,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f\\x7f]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "title": "FeatureValue",
+      "type": "object"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "latitude": {
+          "ge": -90,
+          "le": 90,
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "ge": -180,
+          "le": 180,
+          "title": "Longitude",
+          "type": "number"
+        }
+      },
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "ProcessedReading": {
+      "additionalProperties": false,
+      "description": "A derived observation retaining its full raw envelope and verdict.",
+      "properties": {
+        "provenance": {
+          "$ref": "#/$defs/VerifiedReading"
+        },
+        "normalized_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Value"
+        },
+        "normalized_unit": {
+          "anyOf": [
+            {
+              "maxLength": 32,
+              "minLength": 1,
+              "pattern": "^[^\\x00-\\x1f\\x7f]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Unit"
+        },
+        "quality_flags": {
+          "default": [],
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Quality Flags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "provenance"
+      ],
+      "title": "ProcessedReading",
+      "type": "object"
+    },
+    "ReferenceObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "available_at": {
+          "format": "date-time",
+          "title": "Available At",
+          "type": "string"
+        },
+        "quantity": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Quantity",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit": {
+          "maxLength": 32,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$",
+          "title": "Unit",
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Location"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "source_id",
+        "observed_at",
+        "available_at",
+        "quantity",
+        "value",
+        "unit"
+      ],
+      "title": "ReferenceObservation",
+      "type": "object"
+    },
+    "SignedReading": {
+      "additionalProperties": false,
+      "description": "A structurally valid envelope, which may still be forged or untruthful.\n\nUnit strings are intentionally not limited to C/F/K. Phase 4 applies\nquantity-specific unit semantics without discarding authenticated evidence.\nA null value represents an explicitly signed missing observation.",
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sensor_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Sensor Id",
+          "type": "string"
+        },
+        "key_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Key Id",
+          "type": "string"
+        },
+        "stream_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Stream Id",
+          "type": "string"
+        },
+        "timestamp": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "sequence": {
+          "maximum": 9223372036854775807,
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "quantity": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Quantity",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit": {
+          "maxLength": 32,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$",
+          "title": "Unit",
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Location"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "prev_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prev Hash",
+          "type": "string"
+        },
+        "signature": {
+          "pattern": "^[0-9a-f]{128}$",
+          "title": "Signature",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sensor_id",
+        "key_id",
+        "stream_id",
+        "timestamp",
+        "sequence",
+        "quantity",
+        "value",
+        "unit",
+        "prev_hash",
+        "signature"
+      ],
+      "title": "SignedReading",
+      "type": "object"
+    },
+    "VerifiedReading": {
+      "additionalProperties": false,
+      "description": "Internal verifier output. Construction does not perform verification.",
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "reading": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SignedReading"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "valid",
+            "bad_signature",
+            "unknown_sensor",
+            "replay",
+            "gap",
+            "out_of_window",
+            "chain_anomaly",
+            "revoked_key",
+            "malformed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "signature_verified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Signature Verified"
+        },
+        "checked_at": {
+          "format": "date-time",
+          "title": "Checked At",
+          "type": "string"
+        },
+        "findings": {
+          "default": [],
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Findings",
+          "type": "array"
+        },
+        "raw_message_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Message Sha256"
+        }
+      },
+      "required": [
+        "schema_version",
+        "reading",
+        "status",
+        "signature_verified",
+        "checked_at"
+      ],
+      "title": "VerifiedReading",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Provisional L2 -> L3 interface, including evidence for L4 routing.\n\nThe interval is [start, end); as_of is the information availability cutoff.\nNo geographic neighbors or reference observations are invented when absent.",
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "window_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "title": "Window Id",
+      "type": "string"
+    },
+    "start": {
+      "format": "date-time",
+      "title": "Start",
+      "type": "string"
+    },
+    "end": {
+      "format": "date-time",
+      "title": "End",
+      "type": "string"
+    },
+    "as_of": {
+      "format": "date-time",
+      "title": "As Of",
+      "type": "string"
+    },
+    "readings": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProcessedReading"
+      },
+      "maxItems": 10000,
+      "title": "Readings",
+      "type": "array"
+    },
+    "temporal_features": {
+      "$ref": "#/$defs/FeatureGroup"
+    },
+    "spatial_features": {
+      "$ref": "#/$defs/FeatureGroup"
+    },
+    "reference_features": {
+      "$ref": "#/$defs/FeatureGroup"
+    },
+    "reference_data": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ReferenceObservation"
+      },
+      "maxItems": 10000,
+      "title": "Reference Data",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "window_id",
+    "start",
+    "end",
+    "as_of"
+  ],
+  "title": "FeatureWindow",
+  "type": "object"
+}

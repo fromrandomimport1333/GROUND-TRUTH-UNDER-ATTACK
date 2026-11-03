@@ -1,0 +1,5 @@
+suite,detector,precision,recall,f1,event_recall,nominal_false_episodes_per_stream_day
+seed_91000,rule_ensemble (temporal+spatial+physics+isolation forest),0.318,0.1684,0.2202,0.5062,0.0461
+seed_91000,this detector (Extra Trees + per-variable rules),0.5714,0.3177,0.4083,0.7919,0.0132
+seed_191000,rule_ensemble (temporal+spatial+physics+isolation forest),0.3184,0.1799,0.2299,0.5452,0.0461
+seed_191000,this detector (Extra Trees + per-variable rules),0.5958,0.3525,0.443,0.8224,0.0132

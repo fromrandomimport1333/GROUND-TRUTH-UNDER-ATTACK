@@ -1,0 +1,27 @@
+# Smoke grid: fast iteration for teammates. Temperature only, June 2024, 20 stations drawn from
+# the development pool (held-out stations are never exposed in a suite used for tuning).
+# 28 base specs before placement, one replicate each.
+name: smoke
+seed: 20261
+split: smoke
+variables: [air_temperature]
+months: [6]
+station_pool: dev
+max_stations: 20
+replicates: 1
+durations_h: [1, 6, 24]       # offset, noise, stuck
+families:
+  offset:
+    k: [1, 3]
+  drift:                      # ramp length = window length
+    k: [1, 3]
+    ramp_h: [24, 72]
+  spike:
+    k: [1, 3]
+    n: [1, 3, 6]
+    duration_h: [24]
+  noise:
+    k: [1, 3]
+  flatline:                   # window = w
+    w_h: [1, 3, 6]
+  stuck: {}

@@ -1,0 +1,16 @@
+# Layer 3 detector (core/detection) and the attack-scenario report figures.
+# Install after requirements.txt, which pins numpy, pandas and pytest (pyyaml is pinned here):
+#   pip install --require-hashes -r requirements.txt && pip install -r requirements-detector.txt
+# The loader refuses saved artifacts built with another numpy or scikit-learn version.
+pyyaml==6.0.3
+scikit-learn==1.9.1
+scipy==1.18.1
+threadpoolctl==3.7.0
+joblib==1.6.0
+xarray==2026.9.0
+h5netcdf==1.8.2
+h5py==3.16.0
+pyarrow==26.0.0
+matplotlib==3.11.2
+# optional, for core/docs/detector_walkthrough.ipynb
+ipykernel==7.4.0

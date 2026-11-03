@@ -1,0 +1,70 @@
+# Layer 3 detector configuration (one file, one section per pipeline step).
+
+# --- 1. Data: WegenerNet gridded NetCDF -> compact cache of virtual streams -----------------------
+data:
+  source_glob: data/WN_L2_HHD_v8_2025_1_UTM_TF1_UTC_20*/*.nc
+  cache: data/cache
+  stride: 15                       # every 15th grid cell (1.5 km spacing)
+  margin: 8
+  block_steps: 48
+  min_training_availability: 0.95  # keep sites with >= 95 % clean training values
+  interval_minutes: 30
+  variables:
+    temperature_c: [T_z300m_HHM, Flagged_T, degC]
+    relative_humidity_pct: [RH_HHM, Flagged_RH, percent]
+    precip_mm_30min: [Precip_HHS, Flagged_Precip, mm/30min]
+  split:                           # by interval start
+    train: ["2023-01-01", "2023-09-01"]
+    calibration: ["2023-09-01", "2023-11-01"]
+    validation: ["2023-11-01", "2024-01-01"]
+    test: ["2024-01-01", "2025-01-01"]
+
+# --- 2. Causal feature extractor (residuals vs. forecast, season and neighbours; physical rules) ---
+features:
+  episode_steps: 672               # 14-day replay episodes (state resets)
+  warmup_steps: 48                 # first day of each episode is never scored
+  forecast_candidates: [1.0, 0.75, 0.5, 0.0]
+  seasonal_ridge: 10.0
+  cusum_k: 0.5
+  cusum_cap: 50.0
+  neighbors_per_ring: 6
+  min_neighbors: 3
+  wider_ring_start_rank: 18
+  max_reference_weight: 0.45
+
+# --- 3. Synthetic attacks used to train, select and evaluate the detector ---------------------------
+attacks:
+  development_seed: 41000
+  test_seed: 91000
+  families: [bias, drift, spike, freeze, noise, flatten, rain_scale, pattern, mimicry, patch, multivariate, invalid_range]
+  duration_steps: [12, 48, 96]
+  temperature_amplitudes_dev: [0.5, 1.0, 2.0, 4.0]
+  temperature_amplitudes_test: [0.75, 1.5, 3.0]
+  humidity_amplitudes_dev: [5.0, 10.0, 20.0]
+  humidity_amplitudes_test: [7.5, 15.0]
+  patch_radii_m: [1500, 3000, 6000]
+
+# --- 4. Extra Trees model (one per variable) -----------------------------------------------------
+model:
+  seed: 20261026
+  threads: 4
+  training_replicas: 4             # attacked copies of each training episode
+  train_seed: 510000
+  holdout_families: [pattern, mimicry, multivariate]   # withheld from training, present in selection/test
+  positive_rows_per_episode_variable: 1800
+  negative_rows_per_episode_variable: 1800
+  # Fixed draws taken from the random stream before row sampling in each episode. Keep these values:
+  # they make a retrain select exactly the training rows behind the results in results/.
+  reserved_rng_draws: {train: 1875, tune: 1666}
+
+# --- 5. Alert policy: chosen per variable on Nov-Dec 2023, then frozen ----------------------------
+policy:
+  validation_seed: 41000
+  false_episode_budget: 0.05       # nominal false-alert episodes per stream-day
+  minimum_coverage: 0.95
+  alpha_grid: [0.00001, 0.00003, 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1]
+  confirmation: [direct, two_of_three]
+
+# --- 6. Evaluation on 2024 (two attack seeds on the same weather) --------------------------------
+evaluation:
+  attack_seeds: {seed_91000: 91000, seed_191000: 191000}

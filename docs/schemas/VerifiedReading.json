@@ -1,0 +1,215 @@
+{
+  "$defs": {
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "latitude": {
+          "ge": -90,
+          "le": 90,
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "ge": -180,
+          "le": 180,
+          "title": "Longitude",
+          "type": "number"
+        }
+      },
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "SignedReading": {
+      "additionalProperties": false,
+      "description": "A structurally valid envelope, which may still be forged or untruthful.\n\nUnit strings are intentionally not limited to C/F/K. Phase 4 applies\nquantity-specific unit semantics without discarding authenticated evidence.\nA null value represents an explicitly signed missing observation.",
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sensor_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Sensor Id",
+          "type": "string"
+        },
+        "key_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Key Id",
+          "type": "string"
+        },
+        "stream_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Stream Id",
+          "type": "string"
+        },
+        "timestamp": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "sequence": {
+          "maximum": 9223372036854775807,
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "quantity": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "title": "Quantity",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "unit": {
+          "maxLength": 32,
+          "minLength": 1,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$",
+          "title": "Unit",
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Location"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "prev_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prev Hash",
+          "type": "string"
+        },
+        "signature": {
+          "pattern": "^[0-9a-f]{128}$",
+          "title": "Signature",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sensor_id",
+        "key_id",
+        "stream_id",
+        "timestamp",
+        "sequence",
+        "quantity",
+        "value",
+        "unit",
+        "prev_hash",
+        "signature"
+      ],
+      "title": "SignedReading",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Internal verifier output. Construction does not perform verification.",
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "reading": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SignedReading"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "valid",
+        "bad_signature",
+        "unknown_sensor",
+        "replay",
+        "gap",
+        "out_of_window",
+        "chain_anomaly",
+        "revoked_key",
+        "malformed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "signature_verified": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Signature Verified"
+    },
+    "checked_at": {
+      "format": "date-time",
+      "title": "Checked At",
+      "type": "string"
+    },
+    "findings": {
+      "default": [],
+      "items": {
+        "maxLength": 64,
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+        "type": "string"
+      },
+      "maxItems": 32,
+      "title": "Findings",
+      "type": "array"
+    },
+    "raw_message_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Raw Message Sha256"
+    }
+  },
+  "required": [
+    "schema_version",
+    "reading",
+    "status",
+    "signature_verified",
+    "checked_at"
+  ],
+  "title": "VerifiedReading",
+  "type": "object"
+}

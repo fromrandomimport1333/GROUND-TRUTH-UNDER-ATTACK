@@ -1,0 +1,17 @@
+{
+  "config_sha256": null,
+  "inputs": {
+    "air_temperature": "9ab5809f788e511d38402de2dc4c6981a5706374909a33514b42bcfc6e8fd64f",
+    "precipitation": "526bef3f7f83f84e17813d00b845fdc4d32ccb69df395f74f4f5f91f27477292",
+    "relative_humidity": "3675b355aa574d8273cf1564f3f674599d549b31d78c98038a4da77e2f7edee8"
+  },
+  "n_scenarios": 0,
+  "outputs": {
+    "air_temperature.parquet": "b9d7bd7b08a7c09b699899e44f97122f88959e2c7188d4d928ac0303bf9779e4",
+    "labels.parquet": "329697b9f2954fbd433db62bc0814e20672e933f2f17802fc491f843d2aaface",
+    "precipitation.parquet": "2056b81d4ce487c7b6d1ebdc26726eb3f3902c285ae39f56dd98d474da8888fc",
+    "relative_humidity.parquet": "f8e6b73f4fc93c35c20872a94512736fd13d4d022e9b5c55512f55c66c0562e9"
+  },
+  "seed": null,
+  "suite": "clean2024"
+}

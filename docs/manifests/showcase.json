@@ -1,0 +1,18 @@
+{
+  "config_sha256": "1908bb9f0d25cb8d554e21af3119a63285fadb19fdc9e1dfcaf0d211f46daf15",
+  "inputs": {
+    "air_temperature": "9ab5809f788e511d38402de2dc4c6981a5706374909a33514b42bcfc6e8fd64f",
+    "precipitation": "526bef3f7f83f84e17813d00b845fdc4d32ccb69df395f74f4f5f91f27477292",
+    "relative_humidity": "3675b355aa574d8273cf1564f3f674599d549b31d78c98038a4da77e2f7edee8"
+  },
+  "n_scenarios": 16,
+  "outputs": {
+    "air_temperature.parquet": "85d853132eeb002f3bec941e1990864e2fcead22ad72efedfe322b40e03b3277",
+    "labels.parquet": "f28048544730dead3c1fa9d43cf11b2abc192f17f69c0f187285673509f30609",
+    "precipitation.parquet": "d6f9891dcfd6a11b8782cac1ecfc913226572208143b4aed3296524be990e157",
+    "relative_humidity.parquet": "6f604b8889199f0024ca83e73ddef9543a6f469b0099d51f9dc39d6f04158490",
+    "scenarios.yaml": "c3b003345dc67a6b541da84a2431d100a3d9c691a8f33dd5654cfdd4b0f45649"
+  },
+  "seed": 7,
+  "suite": "showcase"
+}

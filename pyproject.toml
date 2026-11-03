@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cis-challenge-layers12"
+version = "0.6.0"
+description = "Authenticated sensor transport, provenance verification and signal feature processing"
+requires-python = ">=3.14,<3.15"
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.in"]}
+
+[tool.setuptools.packages.find]
+include = ["core*", "adapters*", "attacks*", "eval*", "data_prep*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+pythonpath = ["."]
+markers = ["integration: cross-contract, dependency or transport integration tests", "broker: requires a local Mosquitto executable; fails if explicitly requested but unavailable"]

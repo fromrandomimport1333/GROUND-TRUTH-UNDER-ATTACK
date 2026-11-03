@@ -1,0 +1,187 @@
+{
+  "schema_version": "1.0",
+  "kind": "phase6_stability",
+  "source": "synthetic",
+  "requested_duration_seconds": 120.0,
+  "elapsed_seconds": 120.18542604499999,
+  "rounds": 501,
+  "max_rounds": 2000,
+  "duration_target_reached": true,
+  "round_limit_reached": false,
+  "sensors": 3,
+  "issued_records": 1504,
+  "audited_status_counts": {
+    "valid": 1504,
+    "gap": 1,
+    "replay": 2
+  },
+  "faults_exercised": [
+    "observer_outage_gap_and_archive_recovery",
+    "owned_broker_restart",
+    "durable_l4_event_recovery_and_receiver_restart",
+    "duplicate_delivery",
+    "signer_state_reopened"
+  ],
+  "all_planned_faults_exercised": true,
+  "sender_receiver_heads_match": true,
+  "pending_sender_records": 0,
+  "pending_receiver_events": 0,
+  "archive": {
+    "records": 1504,
+    "capacity": 6010
+  },
+  "closed_feature_windows": 2,
+  "unassigned_events": 15,
+  "publisher_connection_attempts": [
+    2,
+    2,
+    2
+  ],
+  "process_cpu_seconds": 9.007867995,
+  "cpu_percent_one_core": 7.494975298941206,
+  "memory_samples": [
+    {
+      "elapsed_seconds": 0.12350462199992762,
+      "rss_bytes": 73097216,
+      "lifetime_peak_rss_bytes": 72318976,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 6.430376238000008,
+      "rss_bytes": 73940992,
+      "lifetime_peak_rss_bytes": 73265152,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 12.337976087000015,
+      "rss_bytes": 74076160,
+      "lifetime_peak_rss_bytes": 73396224,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 18.268916971999943,
+      "rss_bytes": 74285056,
+      "lifetime_peak_rss_bytes": 73396224,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 24.223575244999893,
+      "rss_bytes": 74510336,
+      "lifetime_peak_rss_bytes": 73527296,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 30.14719461599998,
+      "rss_bytes": 74608640,
+      "lifetime_peak_rss_bytes": 73527296,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 36.020936696000035,
+      "rss_bytes": 74678272,
+      "lifetime_peak_rss_bytes": 73658368,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 41.92333459099996,
+      "rss_bytes": 74756096,
+      "lifetime_peak_rss_bytes": 73658368,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 47.82115624900007,
+      "rss_bytes": 74825728,
+      "lifetime_peak_rss_bytes": 73789440,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 53.78144694699995,
+      "rss_bytes": 74903552,
+      "lifetime_peak_rss_bytes": 73920512,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 59.74323326800004,
+      "rss_bytes": 74993664,
+      "lifetime_peak_rss_bytes": 74051584,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 65.71398617099999,
+      "rss_bytes": 75059200,
+      "lifetime_peak_rss_bytes": 74051584,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 71.72909225500007,
+      "rss_bytes": 74403840,
+      "lifetime_peak_rss_bytes": 74186752,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 77.67386566899995,
+      "rss_bytes": 74539008,
+      "lifetime_peak_rss_bytes": 74276864,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 83.66949099099998,
+      "rss_bytes": 74539008,
+      "lifetime_peak_rss_bytes": 74321920,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 89.65975041000002,
+      "rss_bytes": 74551296,
+      "lifetime_peak_rss_bytes": 74412032,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 95.65987802599989,
+      "rss_bytes": 74555392,
+      "lifetime_peak_rss_bytes": 74588160,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 101.67296445300008,
+      "rss_bytes": 74485760,
+      "lifetime_peak_rss_bytes": 74674176,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 107.65812374500001,
+      "rss_bytes": 74502144,
+      "lifetime_peak_rss_bytes": 74719232,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 113.69309956799998,
+      "rss_bytes": 74539008,
+      "lifetime_peak_rss_bytes": 74719232,
+      "method": "proc statm and getrusage"
+    },
+    {
+      "elapsed_seconds": 119.654663777,
+      "rss_bytes": 74551296,
+      "lifetime_peak_rss_bytes": 74850304,
+      "method": "proc statm and getrusage"
+    }
+  ],
+  "memory_final": {
+    "rss_bytes": 87543808,
+    "lifetime_peak_rss_bytes": 86777856,
+    "method": "proc statm and getrusage"
+  },
+  "sqlite_bytes": {
+    "signer.sqlite3": 20480,
+    "receiver.sqlite3": 1265664,
+    "recovery.sqlite3": 753664
+  },
+  "limitations": [
+    "Bounded local soak; not proof of indefinite uptime.",
+    "CPU and RSS describe Python, excluding the broker process.",
+    "Open event-time windows remain unassigned until closed.",
+    "Delivered receiver journal and archive grow; archive has a hard capacity and no automatic deletion.",
+    "Freshness policy stays active; long outages may require explicitly enrolling a new stream."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "transport": {
+    "enabled": false,
+    "mqtt_version": 5,
+    "host": "localhost",
+    "port": 8883,
+    "topic": "sensors/raw",
+    "tls_required": true,
+    "verify_server_certificate": true,
+    "allow_anonymous": false,
+    "maximum_payload_bytes": 65536
+  },
+  "notes": "Design defaults only; no transport implementation consumes this file in Phase 1. Credentials and certificate paths must be supplied locally in Phase 2."
+}

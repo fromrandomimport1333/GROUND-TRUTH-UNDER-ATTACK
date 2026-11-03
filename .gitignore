@@ -1,0 +1,83 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.env
+.env.*
+local/
+local-*/
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+!.env.example
+keys/*
+!keys/README.md
+*.pem
+*.key
+*.p12
+*.pfx
+data/
+reports/*
+!reports/README.md
+!reports/phase1-test-results.txt
+!reports/environment.json
+!reports/verification.md
+!reports/phase2-verification.md
+!reports/phase2-test-results.txt
+!reports/windows-phase1-validation.md
+!reports/phase3-verification.md
+!reports/phase3-test-results.txt
+!reports/phase4-verification.md
+!reports/phase4-test-results.txt
+!reports/windows-test-id-fix.md
+!reports/windows-test-id-fix-results.txt
+
+!reports/phase5-verification.md
+!reports/phase5-test-results.txt
+
+!reports/phase6-verification.md
+!reports/phase6-test-results.txt
+!reports/phase6-benchmark-linux.json
+!reports/phase6-stability-linux.json
+
+# Large generated outputs
+/outputs/
+/output/
+/results/
+/logs/
+/runs/
+/datasets/
+
+# Speed Fix backup (keep optimized source code)
+/speed-fix-backup-*/
+
+# Other Python environments
+/venv/
+
+# Large dataset files
+*.csv
+*.parquet
+*.npy
+*.npz
+*.pkl
+*.pt
+*.pth
+*.h5
+*.hdf5
+
+# Additional sensitive files
+*.db
+*.sqlite
+*.secret
+
+# From attack-scenarios
+alarms/
+.ruff_cache/
+
+# The trained Layer 3 model is shipped in artifacts/ (data/ stays out of git)
+!/artifacts/calibration.npz
+!reports/detector-overhead.json
